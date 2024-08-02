@@ -1,0 +1,72 @@
+﻿@model EmailModel
+
+@{
+	Layout = "_LayoutDeslogada"; // se usaer estiver deslogado ao acessar essa view acessa esse layout deslogado
+}
+
+
+
+
+<div class="d-flex flex-column justify-content-center align-content-center">
+	
+	<!-- Imagem  -->
+	<div class="text-center">
+
+		<div style="height:300px" class="text-center mt-3 mb-5">
+
+			<img src="/img/program.jpg" style="width:100%; height:100%"/>
+
+		</div>
+
+	</div>
+
+	<!-- Textos  -->
+	<div class="text-center">
+
+		<h2 style="color:darkorange; font-weight: bold">Desperte seu Potencial: Aprenda Programação de Forma Descomplicada</h2>
+
+		<p class="text-center">
+			Você já pensou em desbravar o universo da programação, mas não sabe por onde começar? Seja para impulsionar sua carreira ou explorar novos horizontes, nosso curso de programação é a chave para desbloquear todo o seu potencial!
+			Insira abaixo seus dados para ter mais informações
+		</p>
+	</div>
+
+	<!-- Formulário com os inputs -->
+	<div>
+		<!-- Formulário tipo Post no controller Home e na action(método) SalvarDadosClientes-->
+		<form method="post" asp-controller="Home" asp-action="SalvarDadosCliente">
+			<div class="mb-3">
+				
+				<label class="form-label">Nome</label>
+				
+				<!-- O asp-for="Nome" está preenchendo Nome de Models/EmailModel -->
+				<input type="text" class="form-control" asp-for="Nome" /> 
+				
+				<!-- asp-validation-for="Nome" remete erro caso usuario de submit no formulario
+                     mas não preencha o campo nome -->
+				<span asp-validation-for="Nome"></span>
+
+			</div>
+
+			<div class="mb-3">
+				<label class="form-label">Email</label>
+
+				<!-- O asp-for="Email" está preenchendo Nome de Models/EmailModel -->
+				<input type="email" class="form-control" asp-for="Email" />
+
+				<!-- asp-validation-for="Email" remete erro caso usuario de submit no formulario
+					 mas não preencha o campo nome -->
+				<span asp-validation-for="Email"></span>
+			</div>
+
+			<button class="btn btn-success text-center w-100" style="color:black; font-weight:bold" type="submit">
+				Enviar Informações
+			</button>
+
+		</form>
+
+
+
+	</div>
+
+</div>

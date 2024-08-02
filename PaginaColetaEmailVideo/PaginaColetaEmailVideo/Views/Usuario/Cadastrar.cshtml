@@ -1,0 +1,63 @@
+﻿@using PaginaColetaEmailVideo.Dto
+@model UsuarioCriacaoDto
+
+
+
+@if (TempData["MensagemErro"] != null) // tem mensagem de erro?
+{
+    // retorna na tela um div com msg com erro
+    <div class="alert alert-danger text-dark" role="alert">
+        @TempData["MensagemErro"]
+    </div>
+}
+
+@if (TempData["MensagemSucesso"] != null)  // tem mensagem de sucesso?
+{
+    // retorna uma div com mensagem de sucesso
+    <div class="alert alert-success text-dark" role="alert">
+        @TempData["MensagemSucesso"]
+    </div>
+}
+
+@{
+    Layout = "_Layout"; // se user estiver logado ao acessar essa view acessa esse layout logado
+}
+
+
+
+
+<div class="container mt-5">
+
+    <!-- formulario chama o método Cadastrar do controller Usuario -->
+    <form method="post" asp-action="Cadastrar" asp-controller="Usuario">
+
+        <div class="mb-3">
+            <label>Usuário:</label>
+            <input type="text" class="form-control" asp-for="Usuario" />
+            <span asp-validation-for="Usuario" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label>Email:</label>
+            <input type="email" class="form-control" asp-for="Email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label>Senha:</label>
+            <input type="password" class="form-control" asp-for="Senha" />
+            <span asp-validation-for="Senha" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label>Confirma Senha:</label>
+            <input type="password" class="form-control" asp-for="ConfirmaSenha" />
+            <span asp-validation-for="ConfirmaSenha" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success text-center  w-100 mb-3" style="color:black; font-weight: bold">Cadastrar</button>
+        
+        <!-- link que chama o controller Email  o método Index -->
+        <a class="btn btn-info text-center w-100" style="color:black; font-weight: bold" asp-controller="Email" asp-action="Index">Voltar</a>
+    </form>
+</div>

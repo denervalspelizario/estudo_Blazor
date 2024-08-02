@@ -1,0 +1,82 @@
+﻿@model IEnumerable<EmailModel> // o model será uma lista(IEnumerable) de EmailModel
+
+
+@if (TempData["MensagemErro"] != null)
+{
+    <div class="alert alert-danger text-dark" role="alert">
+        @TempData["MensagemErro"]
+    </div>
+}
+
+@if (TempData["MensagemSucesso"] != null)
+{
+    <div class="alert alert-success text-dark" role="alert">
+        @TempData["MensagemSucesso"]
+    </div>
+}
+
+@{
+    Layout = "_Layout"; // se user estiver logado ao acessar essa view acessa esse layout logado
+}
+
+
+<div class="  py-5">
+
+    <div class="container"
+
+        <div class="text-center mb-5">
+            
+            <!-- Formulário  metodo Get, dentro do método Index, controller Email-->
+            <form method="get" asp-action="Index" asp-controller="Email" class="d-flex justify-content-center">
+
+                <input name="pesquisar" class="form-control w-50 mx-2" style="border:1px solid gray; border-radius:10px"/>
+                <button type="submit" class="btn btn-primary w-10">Pesquisar</button>
+            
+            </form>
+        
+        </div>
+
+
+        <!-- Div responsavel pela listagem de emails -->
+        <div class="row row-cls-1 row-cols-sm-2 g-0 d-flex justify-content-center mt-5">
+           
+            <!-- Nossa model é diferente de null? -->
+            @if (Model != null)
+            {
+                <!-- Se nossa count for maior que 0 ou seja tem algum dado em model -->
+                @if (Model.Count() > 0)
+                {
+                    <!-- Se tiver dado então  vamos passar por cara registo atravez do foreach -->
+                    @foreach (var email in Model)
+                    {
+                        <!-- Cada registro criará uma div(essa de baixo) com os dados do email -->
+                        <div class="card" style="width:15rem; margin-left:20px; margin-bottom:20px">
+                            
+                            <div class="card-body text-center">
+                                
+                                <!-- se status do email for true o icone será verde senão será darkred-->
+                                @if (email.Status == true)
+                                {
+                                    <i class="bi bi-envelope text-center" style="font-size:50px; color: forestgreen"></i>
+                                }
+                                else 
+                                {
+                                    <i class="bi bi-envelope text-center" style="font-size:50px; color: darkred"></i>
+                                }
+
+                               <h5 class="card-title">@email.Nome</h5>
+                               <p class="card-title">@email.Email</p>
+                               <p class="card-text">@email.DataDeRegistro.ToString("dd/MM/yyyy")</p>
+
+                               <!-- o link <a>  que ao clicar vai em DetalhesEmail, o controller esta em email e ao clicar vai em route de email.id -->
+                               <a class="btn btn-info w-100" style="font-size:16px; color:black; font-weight: bold" asp-action="DetalhesEmail" asp-controller="Email" asp-route-id="@email.Id">DETALHES</a>
+                            </div>
+                        
+                        </div>
+                    }
+                }
+            }
+        </div>
+
+    </divc>
+</div>

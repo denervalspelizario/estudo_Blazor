@@ -1,0 +1,48 @@
+﻿﻿@using PaginaColetaEmailVideo.Dto @* essa view recebe como parametro  LoginDto *@
+@model LoginDto
+
+
+@{
+    Layout = "_LayoutDeslogada"; // se usaer estiver deslogado ao acessar essa view acessa esse layout deslogado
+}
+
+
+
+@if (TempData["MensagemErro"] != null)
+{
+    <div class="alert alert-danger text-dark" role="alert">
+        @TempData["MensagemErro"]
+    </div>
+}
+
+@if (TempData["MensagemSucesso"] != null)
+{
+    <div class="alert alert-success text-dark" role="alert">
+        @TempData["MensagemSucesso"]
+    </div>
+}
+
+
+
+<div class="container mt-5">
+
+    <!-- formulario com método post que acessa o método Login do controller Home-->
+    <form method="post" asp-controller="Home" asp-action="Login">
+        
+        <!-- inputs de email e senha-->
+        <div class="mb-3">
+            <label>Email:</label>
+            <input type="email" class="form-control" asp-for="Email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label>Senha:</label>
+            <input type="password" class="form-control" asp-for="Senha" />
+            <span asp-validation-for="Senha" class="text-danger"></span>
+        </div>
+
+        <!-- botão do formulario -->
+        <button type="submit" class="btn btn-warning text-center  w-100 mb-3" style="color:black; font-weight: bold">Entrar</button>
+    </form>
+</div>
