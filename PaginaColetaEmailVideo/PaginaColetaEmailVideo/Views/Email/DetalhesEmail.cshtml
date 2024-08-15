@@ -1,4 +1,6 @@
-﻿@model EmailModel
+﻿
+@* A pagina retorna o email datelhado ou seja um EmailModel   *@
+@model EmailModel
 
 @if(TempData["MensagemErro"] != null) // tem mensagem de erro?
 {
@@ -21,10 +23,12 @@
 }
 
 
-
+@* Existe um dado? Model = EmailModel, o dados do email do usuario foi passado?   *@
 @if(Model != null)
 {
     <div class="container text-center mt-5">
+
+        @* Formulário método post que é linkado com método EnviarEmail do Controller Email *@
         <form method="post" asp-controller="Email" asp-action="EnviarEmail">
 
             <input type="hidden" asp-for="Id"/>

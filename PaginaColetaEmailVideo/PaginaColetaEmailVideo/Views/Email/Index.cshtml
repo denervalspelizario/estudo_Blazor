@@ -1,4 +1,7 @@
-﻿@model IEnumerable<EmailModel> // o model será uma lista(IEnumerable) de EmailModel
+﻿
+@* A pagina retorna uma lista de EmailModel por isso o model é IEnumrable<EmailModel>  *@
+@model IEnumerable<EmailModel> 
+
 
 
 @if (TempData["MensagemErro"] != null)
@@ -19,7 +22,7 @@
     Layout = "_Layout"; // se user estiver logado ao acessar essa view acessa esse layout logado
 }
 
-
+@*  AQUI É O MEIO DA PAGINA /EMAIL  *@
 <div class="  py-5">
 
     <div class="container"
@@ -30,6 +33,8 @@
             <form method="get" asp-action="Index" asp-controller="Email" class="d-flex justify-content-center">
 
                 <input name="pesquisar" class="form-control w-50 mx-2" style="border:1px solid gray; border-radius:10px"/>
+               
+                <!-- BTN DO FORMULÁRIO -->
                 <button type="submit" class="btn btn-primary w-10">Pesquisar</button>
             
             </form>
@@ -40,13 +45,13 @@
         <!-- Div responsavel pela listagem de emails -->
         <div class="row row-cls-1 row-cols-sm-2 g-0 d-flex justify-content-center mt-5">
            
-            <!-- Nossa model é diferente de null? -->
+            <!-- Nossa model é diferente de null? RECBEU ALGUM EMAIL-->
             @if (Model != null)
             {
-                <!-- Se nossa count for maior que 0 ou seja tem algum dado em model -->
+                <!-- Se nossa count for maior que 0, TEM Algum dado em model? ALGUM EMAIL CADASTRADO? -->
                 @if (Model.Count() > 0)
                 {
-                    <!-- Se tiver dado então  vamos passar por cara registo atravez do foreach -->
+                    <!-- Se tiver dado então  vamos passar por cada registo atravez do foreach -->
                     @foreach (var email in Model)
                     {
                         <!-- Cada registro criará uma div(essa de baixo) com os dados do email -->
@@ -68,10 +73,12 @@
                                <p class="card-title">@email.Email</p>
                                <p class="card-text">@email.DataDeRegistro.ToString("dd/MM/yyyy")</p>
 
-                               <!-- o link <a>  que ao clicar vai em DetalhesEmail, o controller esta em email e ao clicar vai em route de email.id -->
-                               <a class="btn btn-info w-100" style="font-size:16px; color:black; font-weight: bold" asp-action="DetalhesEmail" asp-controller="Email" asp-route-id="@email.Id">DETALHES</a>
+                               <!-- o link <a>  que ao clicar vai para View DetalhesEmail, 
+                                    view(DetalhesEmail) do controller Email, route de email.id -->
+                               <a class="btn btn-info w-100" style="font-size:16px; color:black;
+                                  font-weight: bold" asp-action="DetalhesEmail" asp-controller="Email" 
+                                asp-route-id="@email.Id">DETALHES</a>
                             </div>
-                        
                         </div>
                     }
                 }

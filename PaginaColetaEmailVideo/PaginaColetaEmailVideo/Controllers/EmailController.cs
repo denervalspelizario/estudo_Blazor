@@ -10,7 +10,7 @@ namespace PaginaColetaEmailVideo.Controllers
     public class EmailController : Controller
     {
 
-        // injeções de dependencia acessando os métodos para realizar as requisições
+        // injeções de dependencia acessando os métodos do EmailService para realizar as requisições
         private readonly IEmailInterface _emailInterface;
 
         public EmailController(IEmailInterface emailInterface)
@@ -19,17 +19,23 @@ namespace PaginaColetaEmailVideo.Controllers
 
         }
 
-        // metodo que retorna Lista de EmailModels
+        /* metodo Index que retorna pagina Index de Email com toda a Lista(List) de EmailModels
+           passado a pesquisa no parametro ou não  */
         public async Task<ActionResult<List<EmailModel>>> Index(string? pesquisar)
         {
+            // não passou algum parametro no pesquisar então retorna pagina view de Email com  os
+            // com a buscar  dos emails ou nomes baseado no string pesquisar
             if (pesquisar != null)
             {
                 var resgistrosEmailsFiltro = await _emailInterface.ListarEmails(pesquisar);
                
+                // retorna a View do Email com filtro de pesquisar
                 return View(resgistrosEmailsFiltro);
             }
 
-            // se email existir chamará método que lista email
+
+            /* não passou nenhum parametro em pesquisar então chamará método que 
+               lista TODOS os emails*/
             var registrosEmails = await _emailInterface.ListarEmails();
             
             // retorna a View com a lista de email registrados
@@ -42,10 +48,10 @@ namespace PaginaColetaEmailVideo.Controllers
         public async Task<ActionResult<EmailModel>> DetalhesEmail(int id)
         {
             
-            // buscando email por id
+            // buscando email por id usando o método ListarEmailPorId
             var registroEmail = await _emailInterface.ListarEmailPorId(id);
             
-            //retornando View com dados do email encontrado
+            //retorna a View DetalhesEmail com dados do email encontrado(registroEmail)
             return View("DetalhesEmail",registroEmail);
         }
 

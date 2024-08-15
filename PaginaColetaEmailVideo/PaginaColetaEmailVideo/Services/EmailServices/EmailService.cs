@@ -7,6 +7,7 @@ using System.Net;
 
 namespace PaginaColetaEmailVideo.Services.EmailServices
 {
+    // Todas as operações referente ao email são feitas por IemailInterface e EmailService
     public class EmailService : IEmailInterface
     {
 
@@ -65,6 +66,8 @@ namespace PaginaColetaEmailVideo.Services.EmailServices
             }
 
         }
+        
+        
         // método que lista email por id
         public async Task<EmailModel> ListarEmailPorId(int id)
         {
@@ -86,7 +89,7 @@ namespace PaginaColetaEmailVideo.Services.EmailServices
         }
 
 
-        // método que lista emails
+        // método que lista emails por padrão se não colocar nenhum parametro será null
         public async Task<List<EmailModel>> ListarEmails(string pesquisar = null)
         {
             // resposta (que será uma lista de EmailModel)
@@ -94,15 +97,16 @@ namespace PaginaColetaEmailVideo.Services.EmailServices
             
             try
             {
-                // pesquisar é null?
+                // pesquisar é null? ou seja não passou nada
                 if (pesquisar == null)
                 {
-                    // se for, adiciona a resposta a todos os registros de da tabela Emails no banco
+                    // pega todos os registros de da tabela Emails no banco
                     registrosEmails = await _context.Emails.ToListAsync();
                 }
                 else
                 {
-                    /* se nao for, adiciona a respostausando where busca na tabela Emails dados que são iguais 
+                    /* se nao for, ou seja passou algum parametro então
+                       usando o where busca na tabela Emails dados que são iguais 
                        ao pesquisar.Nome ou pesquisar.Email */ 
                     registrosEmails = await _context.Emails
                         .Where(email => email.Nome.Contains(pesquisar) ||
@@ -110,7 +114,7 @@ namespace PaginaColetaEmailVideo.Services.EmailServices
                         .ToListAsync();
                 }
 
-                // retorna a lista
+                // retorna a lista de email tendo filtro ou não
                 return registrosEmails;
 
             }
